@@ -21,7 +21,7 @@ elif vehicle_type == '"USV"':
         'plant/template_plant',
         'ins/base_ins',
         'fms/usv_fms',
-        'control/base_controller',
+        'control/usv_controller',
     ]
 elif vehicle_type == '"Template"':
     MODELS = [
