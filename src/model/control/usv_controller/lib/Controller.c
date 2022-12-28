@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'Controller'.
  *
- * Model version                  : 1.1069
+ * Model version                  : 1.1070
  * Simulink Coder version         : 9.0 (R2018b) 24-May-2018
- * C/C++ source code generated on : Wed Dec 28 11:33:59 2022
+ * C/C++ source code generated on : Wed Dec 28 14:00:35 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -170,7 +170,7 @@ void Controller_step(void)
      *  Constant: '<S4>/Constant'
      *  RelationalOperator: '<S4>/Compare'
      */
-    if (Controller_U.FMS_Out.ctrl_mode != 1) {
+    if (Controller_U.FMS_Out.ctrl_mode == 1) {
       /* Outport: '<Root>/Control_Out' */
       for (i = 0; i < 16; i++) {
         Controller_Y.Control_Out.actuator_cmd[i] =
