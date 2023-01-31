@@ -16,7 +16,7 @@
 #include <firmament.h>
 
 #define TIMER_FREQUENCY       2500000                  // Timer frequency: 2.5M
-#define PWM_DEFAULT_FREQUENCY 50                       // pwm default frequqncy
+#define PWM_DEFAULT_FREQUENCY 400                       // pwm default frequqncy
 #define PWM_ARR(freq)         (TIMER_FREQUENCY / freq) // CCR reload value, Timer frequency = TIMER_FREQUENCY/(PWM_ARR+1)
 
 static uint32_t __pwm_freq = PWM_DEFAULT_FREQUENCY;
@@ -75,10 +75,6 @@ static void pwm_timer_init(void)
 
     /* auto-reload preload enable */
     timer_auto_reload_shadow_enable(TIMER4);
-
-
-    timer_channel_output_pulse_value_config(TIMER4, TIMER_CH_0, PWM_ARR(__pwm_freq) * 0.7 - 1);
-    timer_enable(TIMER4);
 }
 
 rt_err_t drv_buzzer_init(void)

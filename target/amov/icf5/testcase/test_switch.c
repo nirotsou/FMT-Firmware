@@ -16,53 +16,41 @@
 #include <firmament.h>
 #include <utest.h>
 
-MCN_DECLARE(control_output);
+#include "led.h"
 
 static void test_unit_1(void)
 {
-    rt_device_t dev = NULL;
-    uint16_t chan_val[10] = { 0 };
-    uint16_t pwm_value = 0;
-    uint16_t inc_value;
-
-    dev = rt_device_find("main_out");
+    struct device_pin_status pin_sta = { .pin = GET_PIN(A, 10) };
+    rt_device_t dev = rt_device_find("pin");
     uassert_not_null(dev);
 
-    while (1) {
-        if (pwm_value == 0) {
-            pwm_value = 500;
-            inc_value = 50;
+    led_init((struct device_pin_mode) { .pin = GET_PIN(A, 8), .mode = PIN_MODE_OUTPUT, .otype = PIN_OUT_TYPE_PP });
+    led_init((struct device_pin_mode) { .pin = GET_PIN(A, 10), .mode = PIN_MODE_INPUT });
+
+    uint32_t time_start = systime_now_ms();
+    while (systime_now_ms() - time_start < 10000) {
+        dev->read(dev, 0, (void*)&pin_sta, sizeof(&pin_sta));
+
+        if (pin_sta.status == 1) {
+            uassert_true(1);
+            return;
         }
 
-        if (pwm_value >= 2500) {
-            inc_value = -50;
-        }
+        LED_TOGGLE(GET_PIN(A, 8));
 
-        for (int i = 0; i < 10; i++) {
-            chan_val[i] = pwm_value;
-        }
-
-        rt_device_write(dev, 0x3FF, chan_val, 10);
-
-        pwm_value += inc_value;
-
-        if (pwm_value <= 500) {
-            break;
-        }
-
-        systime_msleep(100);
+        systime_mdelay(500);
     }
+
+    uassert_true(0);
 }
 
 static rt_err_t testcase_init(void)
 {
-    mcn_suspend(MCN_HUB(control_output));
     return RT_EOK;
 }
 
 static rt_err_t testcase_cleanup(void)
 {
-    mcn_resume(MCN_HUB(control_output));
     return RT_EOK;
 }
 
@@ -70,4 +58,4 @@ static void testcase(void)
 {
     UTEST_UNIT_RUN(test_unit_1);
 }
-UTEST_TC_EXPORT(testcase, "utest.interface.pwm", testcase_init, testcase_cleanup, 50000);
+UTEST_TC_EXPORT(testcase, "utest.interface.switch", testcase_init, testcase_cleanup, 10000);

@@ -16,53 +16,31 @@
 #include <firmament.h>
 #include <utest.h>
 
-MCN_DECLARE(control_output);
+#include "drv_buzzer.h"
+
+#define TIMER_FREQUENCY       2500000                  // Timer frequency: 2.5M
+#define PWM_DEFAULT_FREQUENCY 400                       // pwm default frequqncy
+#define PWM_ARR(freq)         (TIMER_FREQUENCY / freq) // CCR reload value, Timer frequency = TIMER_FREQUENCY/(PWM_ARR+1)
+
+static uint32_t __pwm_freq = PWM_DEFAULT_FREQUENCY;
 
 static void test_unit_1(void)
 {
-    rt_device_t dev = NULL;
-    uint16_t chan_val[10] = { 0 };
-    uint16_t pwm_value = 0;
-    uint16_t inc_value;
+    timer_channel_output_pulse_value_config(TIMER4, TIMER_CH_0, PWM_ARR(__pwm_freq) * 0.5 - 1);
+    timer_enable(TIMER4);
 
-    dev = rt_device_find("main_out");
-    uassert_not_null(dev);
+    systime_mdelay(3000);
 
-    while (1) {
-        if (pwm_value == 0) {
-            pwm_value = 500;
-            inc_value = 50;
-        }
-
-        if (pwm_value >= 2500) {
-            inc_value = -50;
-        }
-
-        for (int i = 0; i < 10; i++) {
-            chan_val[i] = pwm_value;
-        }
-
-        rt_device_write(dev, 0x3FF, chan_val, 10);
-
-        pwm_value += inc_value;
-
-        if (pwm_value <= 500) {
-            break;
-        }
-
-        systime_msleep(100);
-    }
+    timer_disable(TIMER4);
 }
 
 static rt_err_t testcase_init(void)
 {
-    mcn_suspend(MCN_HUB(control_output));
     return RT_EOK;
 }
 
 static rt_err_t testcase_cleanup(void)
 {
-    mcn_resume(MCN_HUB(control_output));
     return RT_EOK;
 }
 
@@ -70,4 +48,4 @@ static void testcase(void)
 {
     UTEST_UNIT_RUN(test_unit_1);
 }
-UTEST_TC_EXPORT(testcase, "utest.interface.pwm", testcase_init, testcase_cleanup, 50000);
+UTEST_TC_EXPORT(testcase, "utest.interface.buzzer", testcase_init, testcase_cleanup, 10000);

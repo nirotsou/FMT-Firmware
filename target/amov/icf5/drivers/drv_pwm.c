@@ -47,7 +47,7 @@ const static struct actuator_ops __act_ops = {
 
 static struct actuator_device act_dev = {
     .chan_mask = 0x3FF,
-    .range = { 1000, 2000 },
+    .range = { 500, 2500 },
     .config = {
         .protocol = ACT_PROTOCOL_PWM,
         .chan_num = MAX_PWM_OUT_CHAN,
