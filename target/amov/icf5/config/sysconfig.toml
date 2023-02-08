@@ -19,11 +19,6 @@ target = "Amov-ICF5"
 # Mavproxy Device Configuration
 [mavproxy]
     [[mavproxy.devices]]
-    type = "serial"
-    name = "serial1"
-    baudrate = 57600
-
-    [[mavproxy.devices]]
     type = "usb"
     name = "usbd0"
     auto-switch = true

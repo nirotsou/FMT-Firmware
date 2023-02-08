@@ -113,7 +113,7 @@ static void bsp_show_information(void)
     console_println(" / _// / __/  ' \\/ _ `/  ' \\/ -_) _ \\/ __/");
     console_println("/_/ /_/_/ /_/_/_/\\_,_/_/_/_/\\__/_//_/\\__/ ");
 
-    sprintf(buffer, "FMT FW %s", FMT_VERSION);
+    sprintf(buffer, "FMT Test FW %s", FMT_VERSION);
     banner_item("Firmware", buffer, '.', BANNER_ITEM_LEN);
     sprintf(buffer, "RT-Thread v%ld.%ld.%ld", RT_VERSION, RT_SUBVERSION, RT_REVISION);
     banner_item("Kernel", buffer, '.', BANNER_ITEM_LEN);
@@ -309,7 +309,7 @@ void bsp_initialize(void)
     RT_CHECK(drv_ms5611_init("spi1_dev2", "barometer2"));
 
     drv_icm20948_init("spi1_dev1", "gyro2", "accel2", "mag2");
-    drv_mtf_01_init("serial3");
+    // drv_mtf_01_init("serial3");
 
     RT_CHECK(gps_m8n_init("serial4", "gps"));
 
@@ -317,8 +317,8 @@ void bsp_initialize(void)
     FMT_CHECK(register_sensor_imu("gyro0", "accel0", 0));
     FMT_CHECK(register_sensor_mag("mag0", 0));
     FMT_CHECK(register_sensor_barometer("barometer"));
-    FMT_CHECK(advertise_sensor_optflow(0));
-    FMT_CHECK(advertise_sensor_rangefinder(0));
+    // FMT_CHECK(advertise_sensor_optflow(0));
+    // FMT_CHECK(advertise_sensor_rangefinder(0));
 #endif
 
     /* init finsh */
