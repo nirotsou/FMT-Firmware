@@ -44,11 +44,9 @@ static void test_unit_1(void)
 
     uassert_int_equal(rt_device_open(spi_device, RT_DEVICE_OFLAG_RDWR), RT_EOK);
 
-    uassert_int_equal(spi_read_reg8(spi_device, 0x75, &chip_id), RT_EOK);
+    uassert_int_equal(spi_read_reg8(spi_device, 0x0F, &chip_id), RT_EOK);
 
-    chip_id &= 0x7E;
-
-    uassert_int_equal(chip_id, 0x68);
+    uassert_int_equal(chip_id, 0xD3);
 
     rt_device_close(spi_device);
 }
