@@ -65,4 +65,4 @@ static void testcase(void)
 {
     UTEST_UNIT_RUN(test_unit_1);
 }
-// UTEST_TC_EXPORT(testcase, "utest.interface.spi2", testcase_init, testcase_cleanup, 10000);
+UTEST_TC_EXPORT(testcase, "utest.interface.spi2", testcase_init, testcase_cleanup, 10000);
