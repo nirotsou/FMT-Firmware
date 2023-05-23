@@ -28,3 +28,6 @@ build
 *.orig
 cconfig.h
 .cortex-debug*
+.embold
+*.log
+
