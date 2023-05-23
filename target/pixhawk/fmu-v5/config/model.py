@@ -15,7 +15,7 @@ elif vehicle_type == 'Fixwing':
         'plant/fixwing',
         'ins/base_ins',
         'fms/fw_fms',
-        'control/fw_controller',
+        'control/fwing_controller',
     ]
 elif vehicle_type == 'Template':
     MODELS = [
