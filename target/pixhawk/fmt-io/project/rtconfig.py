@@ -14,7 +14,7 @@ STM32_TYPE = 'STM32F10X_MD'
 # EXEC_PATH is the compiler execute path, for example, CodeSourcery, Keil MDK, IAR
 if  CROSS_TOOL == 'gcc':
 	PLATFORM 	= 'gcc'
-	EXEC_PATH 	= 'your-compiler-path'
+	EXEC_PATH 	= 'D:\\Program Files (x86)\\GNU Arm Embedded Toolchain\\10 2021.10\\bin'
 else:
     print('================ERROR============================')
     print('Not support %s yet!' % CROSS_TOOL)
