@@ -1,6 +1,7 @@
 # Modify this file to decide which drivers are compiled
 
 DRIVERS = [
+    'airspeed/ms4525.c',
     'imu/l3gd20h.c',
     'imu/lsm303d.c',
     'imu/mpu6000.c',

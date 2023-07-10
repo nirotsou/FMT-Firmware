@@ -2,6 +2,7 @@
 
 HAL = [
     '*.c',
+    'airspeed/*.c',
     'mag/*.c',
     'accel/*.c',
     'barometer/*.c',
